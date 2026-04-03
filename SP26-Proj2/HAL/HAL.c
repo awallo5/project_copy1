@@ -7,6 +7,7 @@
  */
 
 #include <HAL/HAL.h>
+#include <HAL/LcdDriver/Crystalfontz128x128_ST7735.h>
 
 /**
  * Constructs a new API object. The API constructor should simply call the
@@ -14,10 +15,9 @@
  *
  * @return a properly constructed API object.
  */
-HAL HAL_construct()
-{
-    // The API object which will be returned at the end of construction
-    HAL hal;
+HAL HAL_construct() {
+  // The API object which will be returned at the end of construction
+  HAL hal;
 
     // Initialize all LEDs by calling their constructors with correctly-defined
     // arguments.
@@ -57,9 +57,23 @@ HAL HAL_construct()
     // Enable the UART at 9600 BPS
     UART_SetBaud_Enable(&hal.uart, BAUD_9600);
 
-    // Construct the GFX module inside of this HAL struct
-    hal.gfx = GFX_construct(FG_COLOR, BG_COLOR);
 
+  // LCD Screen Initialization
+  Crystalfontz128x128_Init();
+  Crystalfontz128x128_SetOrientation(LCD_ORIENTATION_UP);
+
+  Graphics_initContext(&hal.g_sContext, &g_sCrystalfontz128x128, &g_sCrystalfontz128x128_funcs);
+
+  Graphics_clearDisplay(&hal.g_sContext);
+  // Init. Config.
+  Graphics_setBackgroundColor(&hal.g_sContext, GRAPHICS_COLOR_BLACK);
+  Graphics_setForegroundColor(&hal.g_sContext, GRAPHICS_COLOR_WHITE);
+  Graphics_setFont(&hal.g_sContext, &g_sFontFixed6x8);
+  
+  // GRAPHICS CONSTRUCT INITIALIZATION
+   hal.gfx = GFX_construct(FG_COLOR, BG_COLOR);
+   
+   
     // Once we have finished building the API, return the completed struct.
     return hal;
 }
@@ -73,11 +87,10 @@ HAL HAL_construct()
  *
  * @param hal:  The API whose input modules we wish to refresh
  */
-void HAL_refresh(HAL *hal)
-{
-    // Refresh Launchpad buttons
-    Button_refresh(&hal->launchpadS1);
-    Button_refresh(&hal->launchpadS2);
+void HAL_refresh(HAL* hal) {
+  // Refresh Launchpad buttons
+  Button_refresh(&hal->launchpadS1);
+  Button_refresh(&hal->launchpadS2);
 
     // Refresh Boosterpack buttons
     Button_refresh(&hal->boosterpackS1);

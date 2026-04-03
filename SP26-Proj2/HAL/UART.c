@@ -80,8 +80,10 @@ void UART_SetBaud_Enable(UART *uart_p, UART_Baudrate baudChoice)
     uart_p->config.firstModReg = firstModRegMapping[baudChoice];
     uart_p->config.secondModReg = secondModRegMapping[baudChoice];
 
-    UART_initModule(uart_p->moduleInstance, &uart_p->config);
-    UART_enableModule(uart_p->moduleInstance);
+  // TODO: initialize and enable uart instance (refer to the basic_example_UART
+  // project for guidance)
+  UART_initModule(uart_p->moduleInstance, &(uart_p->config));
+  UART_enableModule(uart_p->moduleInstance);
 }
 
 /**
@@ -110,9 +112,9 @@ bool UART_hasChar(UART *uart_p)
  * @return the value of the character from UART
  */
 
-char UART_getChar(UART *uart_p)
+char UART_getChar(UART* uart_p)
 {
-    return UART_receiveData(uart_p->moduleInstance);
+  return (char) UART_receiveData(uart_p->moduleInstance);
 }
 
 /**
@@ -127,23 +129,31 @@ char UART_getChar(UART *uart_p)
 // this function checks the transmit interrupt flag and returns true if the UART is able to send
 bool UART_canSend(UART *uart_p)
 {
-
     uint8_t interruptStatus = UART_getInterruptStatus(
         uart_p->moduleInstance, EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG);
     return (interruptStatus == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG);
 }
 
-/**
- * send the UART packet to the user
- *
- * @param uart_p: The pointer to the UART instance with which to handle our
- * operations.
- *
- * @return the value of the character from UART
- */
+// TODO: Complete the UART_sendChar() function.
+// TODO: Write a descriptive comment explaining HOW the function is implemented.
+//       In the implementation file, prefer explaining HOW the function is
+//       implemented over simply WHAT the function does.
+void UART_sendChar(UART* uart_p, char c) {
+    UART_transmitData(uart_p->moduleInstance, (uint8_t)c);
+  return;
+}
 
-void UART_sendChar(UART *uart_p, char c)
-{
+void UART_sendString(UART* uart_p, char* char_arr) {
+    while (*char_arr != '\0') {
+        while(1){
+            if(UART_canSend(uart_p)){
+                break;
+            }
+        }
+    UART_sendChar(uart_p, *char_arr);
+    char_arr++;
+    }
 
-    UART_transmitData(uart_p->moduleInstance, c);
+    // stops function from exiting before finishing message write
+    while(UART_queryStatusFlags(uart_p->moduleInstance, EUSCI_A_UART_BUSY));
 }
