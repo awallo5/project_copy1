@@ -22,9 +22,6 @@ typedef enum {
     MENU_onPlay,
     MENU_onInstructions,
     MENU_onHighScore,
-    HIGHSCORE,
-    INSTRUCTIONS,
-    GAME
 } FSM_state;
 
 
@@ -33,7 +30,10 @@ typedef enum {
     MENU,
     GAMEPLAY,
     LOSE,
-    WIN
+    WIN,
+    HIGHSCORE,
+    INSTRUCTIONS,
+    GAME
 } FSM_type;
 
 typedef enum {

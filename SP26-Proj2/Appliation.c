@@ -36,7 +36,7 @@ void Application_loop(Application* app_p, HAL* hal_p){
         break;
 
     case MENU:
-        // runMenuFSM();
+         runMenuFSM(app_p, hal_p);
         break;
 
     case GAMEPLAY:
@@ -49,6 +49,14 @@ void Application_loop(Application* app_p, HAL* hal_p){
 
     case WIN:
         // runWinFSM();
+        break;
+
+    case HIGHSCORE:
+        break;
+    case INSTRUCTIONS:
+        break;
+
+    case GAME:
         break;
 
     }
@@ -102,7 +110,7 @@ void runMenuFSM(Application *app_p, HAL*hal_p){
             app_p->state = MENU_onHighScore;
             drawCursor(app_p, hal_p);
         } else if(Button_isTapped(&hal_p->boosterpackJS)){
-            app_p->state = INSTRUCTIONS;
+            app_p->type = INSTRUCTIONS;
             initialize_Instructions_Screen_Graphics(app_p, hal_p);
         }
         break;
@@ -115,20 +123,10 @@ void runMenuFSM(Application *app_p, HAL*hal_p){
            app_p->state = MENU_onPlay;
            drawCursor(app_p, hal_p);
        } else if(Button_isTapped(&hal_p->boosterpackJS)){
-           app_p->state = HIGHSCORE;
+           app_p->type = HIGHSCORE;
            initialize_HighScore_Screen_Graphics(app_p, hal_p);
        }
         break;
-
-    case INSTRUCTIONS:
-        break;
-
-    case HIGHSCORE:
-        break;
-
-    case GAME:
-        break;
-
     }
 }
 

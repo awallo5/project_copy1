@@ -128,11 +128,11 @@ void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p){
     ================================================================ */
 
  int getCursorYpos(Application *app_p){
-     if(app_p->cursor_loc == cursor_OnPlay)
+     if(app_p->state == MENU_onPlay)
          return 50;
-     if(app_p->cursor_loc == cursor_OnInstructions)
+     if(app_p->state == MENU_onInstructions)
          return 60;
-     if(app_p->cursor_loc == cursor_OnHighscore)
+     if(app_p->state == MENU_onHighScore)
          return 70;
 
      // else return 80 to show something is wrong
