@@ -45,27 +45,27 @@ void initialize_Starting_Screen_Graphics(HAL* hal_p){
 void initialize_Menu_Screen_Graphics(Application *app_p, HAL* hal_p){
 
         GFX_clear(&hal_p->gfx);
-        Graphics_drawStringCentered(&hal_p->gfx,
+        Graphics_drawStringCentered(&hal_p->gfx.context,
                                     (int8_t *)"Menu",
                                     AUTO_STRING_LENGTH,
                                     64,
                                     12, false);
-        Graphics_drawStringCentered(&hal_p->gfx,
+        Graphics_drawStringCentered(&hal_p->gfx.context,
                                     (int8_t *)"-------------------",
                                     AUTO_STRING_LENGTH,
                                     64,
                                     20, false);
-        Graphics_drawString(&hal_p->gfx,
+        Graphics_drawString(&hal_p->gfx.context,
                             (int8_t *)"Play",
                             AUTO_STRING_LENGTH,
                             44,
                             50, false);
-        Graphics_drawString(&hal_p->gfx,
+        Graphics_drawString(&hal_p->gfx.context,
                             (int8_t *)"Instructions",
                             AUTO_STRING_LENGTH,
                             44,
                             60, false);
-        Graphics_drawString(&hal_p->gfx,
+        Graphics_drawString(&hal_p->gfx.context,
                             (int8_t *)"Highscores",
                             AUTO_STRING_LENGTH,
                             44,
@@ -89,30 +89,30 @@ void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p){
  void drawCursor(Application *app_p, HAL* hal_p){
 
      int temp_color = hal_p->gfx.foreground;   // stores any current foreground
-     int temp_font = hal_p->gfx.context.font; // stores any current font
+     const Graphics_Font* temp_font = hal_p->gfx.context.font; // stores any current font
 
      GFX_setForeground(&hal_p->gfx, GRAPHICS_COLOR_BLACK);
      GFX_setFont(&hal_p->gfx.context, &g_sFontFixed6x8);
 
 
-     Graphics_drawString(&hal_p->gfx,
+     Graphics_drawString(&hal_p->gfx.context,
                          (int8_t *)">",
                          AUTO_STRING_LENGTH,
                          36,
                          50, false);
-     Graphics_drawString(&hal_p->gfx,
+     Graphics_drawString(&hal_p->gfx.context,
                          (int8_t *)">",
                          AUTO_STRING_LENGTH,
                          36,
                          60, false);
-     Graphics_drawString(&hal_p->gfx,
+     Graphics_drawString(&hal_p->gfx.context,
                          (int8_t *)">",
                          AUTO_STRING_LENGTH,
                          36,
                          70, false);
      GFX_setForeground(&hal_p->gfx, GRAPHICS_COLOR_WHITE);
 
-     Graphics_drawString(&hal_p->gfx,
+     Graphics_drawString(&hal_p->gfx.context,
                               (int8_t *)">",
                               AUTO_STRING_LENGTH,
                               36,
@@ -120,7 +120,7 @@ void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p){
 
      // return to whatever it was before
      GFX_setForeground(&hal_p->gfx, temp_color);
-     GFX_setFont(&hal_p->gfx.context, temp_font);
+     GFX_setFont(&hal_p->gfx, temp_font);
  }
 
  /* ================================================================
@@ -130,10 +130,13 @@ void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p){
  int getCursorYpos(Application *app_p){
      if(app_p->cursor_loc == cursor_OnPlay)
          return 50;
-     if(app_p->cursor_loc == cursor_OnPlay)
+     if(app_p->cursor_loc == cursor_OnInstructions)
          return 60;
-     if(app_p->cursor_loc == cursor_OnPlay)
+     if(app_p->cursor_loc == cursor_OnHighscore)
          return 70;
+
+     // else return 80 to show something is wrong
+     return 80;
  }
 
 
