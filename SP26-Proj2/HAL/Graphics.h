@@ -11,7 +11,8 @@
 #include <HAL/LcdDriver/Crystalfontz128x128_ST7735.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 #include <ti/grlib/grlib.h>
-#include <HAL/HAL.h>
+
+typedef struct _HAL HAL;
 
 #define FG_COLOR GRAPHICS_COLOR_WHITE
 #define BG_COLOR GRAPHICS_COLOR_BLACK
@@ -38,8 +39,6 @@ void initialize_HighScore_Screen_Graphics(HAL* hal_p);
 /* ================================================================
    MICRO GRAPHICS CALLS
    ================================================================ */
-
-void wipe(HAL* hal_p);
 
 
 GFX GFX_construct(uint32_t defaultForeground, uint32_t defaultBackground);

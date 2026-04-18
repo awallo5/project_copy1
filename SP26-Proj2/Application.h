@@ -12,6 +12,7 @@
 #include <HAL/HAL.h>
 
 
+
 /* ================================================================
    FSM STATE DEFINITIONS
    ================================================================ */
@@ -20,6 +21,8 @@ typedef enum {
     START,
     MENU_onPlay,
     MENU_onInstructions,
+    MENU_onHighScore,
+    HIGHSCORE,
     INSTRUCTIONS,
     GAME
 } FSM_state;
@@ -27,6 +30,7 @@ typedef enum {
 
 typedef enum {
     INIT,
+    MENU,
     GAMEPLAY,
     LOSE,
     WIN
@@ -39,30 +43,44 @@ typedef enum {
 
 struct _Application {
 
+
+    /* ===============================
+       Starting Screen Logic
+       =============================== */
+
+    bool start_screen_on;
+
     /* ===============================
        Communications
        =============================== */
+
     UART_Baudrate baudChoice;
 
 
     /* ===============================
        FSM State Control
        =============================== */
+
     FSM_state state;
     FSM_type type;
+
+    /* ===============================
+       TIMERS
+       =============================== */
+
+    SWTimer StartScreen_Timer; // 2 second timer goes from StartScreen -> Menu
 
 };
 
 
-
-
+typedef struct _Application Application;
 
 /* ================================================================
    CORE APPLICATION FUNCTIONS
    ================================================================ */
 
 // Constructed once in main()
-Application Application_construct();
+Application Application_construct(HAL* hal_p);
 
 // Called every super-loop
 void Application_loop(Application* app, HAL* hal);
@@ -79,16 +97,23 @@ uint32_t CircularIncrement(uint32_t value, uint32_t maximum);
 
 
 /* ================================================================
-   FSM EXECUTION
+   STATE FSM EXECUTION
    ================================================================ */
+void runMenuFSM(Application *app_p, HAL*hal_p);
+void runGamePlayFSM(Application *app_p, HAL *hal_p);
+void runLoseFSM(Application *app_p, HAL *hal_p);
+void runWinFSM(Application *app_p, HAL *hal_p);
 
+/* ================================================================
+   TYPE FSM EXECUTION
+   ================================================================ */
+void runInitFSM(Application *app_p, HAL* hal_p);
 
 /* ================================================================
    TIMER CONSTRUCTION FUNCTIONS
    ================================================================ */
 
 void createStartScreenTimerInApplication(Application *app_p);
-SWTimer startScreenTime = SWTimer_construct(2000);
 
 
 /* ================================================================

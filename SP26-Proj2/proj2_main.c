@@ -44,6 +44,39 @@ void initialize_Starting_Screen_Graphics(HAL* hal_p){
 }
 void initialize_Menu_Screen_Graphics(HAL* hal_p){
 
+        GFX_clear(&hal_p->gfx);
+        Graphics_drawStringCentered(&hal_p->gfx,
+                                    (int8_t *)"Menu",
+                                    AUTO_STRING_LENGTH,
+                                    64,
+                                    12, false);
+        Graphics_drawStringCentered(&hal_p->gfx,
+                                    (int8_t *)"-------------------",
+                                    AUTO_STRING_LENGTH,
+                                    64,
+                                    20, false);
+        Graphics_drawString(&hal_p->gfx,
+                            (int8_t *)"Play",
+                            AUTO_STRING_LENGTH,
+                            44,
+                            50, false);
+        Graphics_drawString(&hal_p->gfx,
+                            (int8_t *)"Instructions",
+                            AUTO_STRING_LENGTH,
+                            44,
+                            60, false);
+        Graphics_drawStringCentered(&hal_p->gfx,
+                                    (int8_t *)"See terminal",
+                                    AUTO_STRING_LENGTH,
+                                    64,
+                                    110, false);
+        Graphics_drawStringCentered(&hal_p->gfx,
+                                    (int8_t *)" for controls.",
+                                    AUTO_STRING_LENGTH,
+                                    64,
+                                    120, false);
+
+    //    drawCursor(hal_p, TOP1);
 }
 
 void initialize_Instructions_Screen_Graphics(HAL* hal_p){
@@ -52,7 +85,6 @@ void initialize_Instructions_Screen_Graphics(HAL* hal_p){
 void initialize_HighScore_Screen_Graphics(HAL* hal_p){
 
 }
-
 
 
 /* ================================================================

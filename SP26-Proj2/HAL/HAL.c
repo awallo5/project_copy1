@@ -58,18 +58,6 @@ HAL HAL_construct() {
     UART_SetBaud_Enable(&hal.uart, BAUD_9600);
 
 
-  // LCD Screen Initialization
-  Crystalfontz128x128_Init();
-  Crystalfontz128x128_SetOrientation(LCD_ORIENTATION_UP);
-
-  Graphics_initContext(&hal.g_sContext, &g_sCrystalfontz128x128, &g_sCrystalfontz128x128_funcs);
-
-  Graphics_clearDisplay(&hal.g_sContext);
-  // Init. Config.
-  Graphics_setBackgroundColor(&hal.g_sContext, GRAPHICS_COLOR_BLACK);
-  Graphics_setForegroundColor(&hal.g_sContext, GRAPHICS_COLOR_WHITE);
-  Graphics_setFont(&hal.g_sContext, &g_sFontFixed6x8);
-  
   // GRAPHICS CONSTRUCT INITIALIZATION
    hal.gfx = GFX_construct(FG_COLOR, BG_COLOR);
    

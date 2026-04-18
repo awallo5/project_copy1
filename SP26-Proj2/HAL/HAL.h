@@ -58,7 +58,7 @@ struct _HAL {
   //GFX - Construct a new GFX instance
   GFX gfx;
 };
-typedef struct _HAL HAL;
+
 
 // Constructs an HAL object by calling the constructor of each individual member
 HAL HAL_construct();
