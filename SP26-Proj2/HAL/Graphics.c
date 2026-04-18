@@ -29,6 +29,7 @@ GFX GFX_construct(uint32_t defaultForeground, uint32_t defaultBackground)
 }
 
 
+
 void GFX_resetColors(GFX* gfx_p)
 {
     gfx_p->foreground = gfx_p->defaultForeground;
@@ -134,5 +135,8 @@ void GFX_drawLine(GFX* gfx_p, int x1, int x2, int y1, int y2) {
     Graphics_drawLine(&gfx_p->context, x1, y1, x2, y2);
 }
 
+void GFX_setFont(Graphics_Context* context_p, const Graphics_Font* font_p) {
+    Graphics_setFont(context_p, font_p);
+}
 
 

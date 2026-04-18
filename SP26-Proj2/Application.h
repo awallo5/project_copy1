@@ -36,6 +36,12 @@ typedef enum {
     WIN
 } FSM_type;
 
+typedef enum {
+    cursor_OnPlay,
+    cursor_OnInstructions,
+    cursor_OnHighscore
+} Cursor_loc;
+
 
 /* ================================================================
    MAIN APPLICATION STRUCTURE
@@ -63,6 +69,7 @@ struct _Application {
 
     FSM_state state;
     FSM_type type;
+    Cursor_loc cursor_loc;
 
     /* ===============================
        TIMERS
@@ -110,6 +117,11 @@ void runWinFSM(Application *app_p, HAL *hal_p);
 void runInitFSM(Application *app_p, HAL* hal_p);
 
 /* ================================================================
+   INT CHECKERS
+   ================================================================ */
+int getCursorYpos(Application *app_p);
+
+/* ================================================================
    TIMER CONSTRUCTION FUNCTIONS
    ================================================================ */
 
@@ -124,6 +136,19 @@ void createStartScreenTimerInApplication(Application *app_p);
 /* ================================================================
     DRAWING
    ================================================================ */
+
+
+/* ================================================================
+   MACRO GRAPHICS CALLS
+   ================================================================ */
+void initialize_Starting_Screen_Graphics(HAL* hal_p);
+void initialize_Menu_Screen_Graphics(Application *app_p, HAL* hal_p);
+void initialize_Instructions_Screen_Graphics(Application *app_p, HAL* hal_p);
+void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p);
+
+
+void drawCursor(Application *app_p, HAL* hal_p);
+
 
 
 /* ================================================================

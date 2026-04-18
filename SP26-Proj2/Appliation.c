@@ -17,6 +17,7 @@ Application Application_construct(HAL* hal_p) {
 
     app.baudChoice = BAUD_9600;
     app.type = INIT;
+    app.cursor_loc = cursor_OnPlay;
 
     /* ===============================
        Start Screen Logic
@@ -74,7 +75,7 @@ void runInitFSM(Application *app_p, HAL* hal_p){
         app_p->state = MENU_onPlay;
 
         // Execute Menu_onPlay Graphics
-        initialize_Menu_Screen_Graphics(hal_p);
+        initialize_Menu_Screen_Graphics(app_p, hal_p);
     }
 }
 
@@ -82,12 +83,41 @@ void runMenuFSM(Application *app_p, HAL*hal_p){
     switch(app_p->state){
 
     case MENU_onPlay:
+        if(hal_p->joystick.tappedUp){
+            app_p->state = MENU_onHighScore;
+            drawCursor(app_p, hal_p);
+        } else if(hal_p->joystick.tappedDown){
+            app_p->state = MENU_onInstructions;
+            drawCursor(app_p, hal_p);
+        } else if(Button_isTapped(&hal_p->boosterpackJS)){
+            app_p->type = GAMEPLAY;
+        }
         break;
 
     case MENU_onInstructions:
+        if(hal_p->joystick.tappedUp){
+            app_p->state = MENU_onPlay;
+            drawCursor(app_p, hal_p);
+        } else if(hal_p->joystick.tappedDown){
+            app_p->state = MENU_onHighScore;
+            drawCursor(app_p, hal_p);
+        } else if(Button_isTapped(&hal_p->boosterpackJS)){
+            app_p->state = INSTRUCTIONS;
+            initialize_Instructions_Screen_Graphics(app_p, hal_p);
+        }
         break;
 
     case MENU_onHighScore:
+       if(hal_p->joystick.tappedUp){
+           app_p->state = MENU_onInstructions;
+           drawCursor(app_p, hal_p);
+       } else if(hal_p->joystick.tappedDown){
+           app_p->state = MENU_onPlay;
+           drawCursor(app_p, hal_p);
+       } else if(Button_isTapped(&hal_p->boosterpackJS)){
+           app_p->state = HIGHSCORE;
+           initialize_HighScore_Screen_Graphics(app_p, hal_p);
+       }
         break;
 
     case INSTRUCTIONS:
@@ -101,6 +131,8 @@ void runMenuFSM(Application *app_p, HAL*hal_p){
 
     }
 }
+
+
 void runGamePlayFSM(Application *app_p, HAL *hal_p){
 
 }

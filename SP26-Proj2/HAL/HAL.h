@@ -14,6 +14,7 @@
 #include <HAL/Graphics.h>
 #include <HAL/Timer.h>
 #include <HAL/UART.h>
+#include <HAL/Joystick.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 
 /**============================================================================
@@ -51,6 +52,9 @@ struct _HAL {
   Button boosterpackS1;
   Button boosterpackS2;
   Button boosterpackJS;
+
+  // Joystick - Construct a new Joystick instance
+  Joystick joystick;
 
   // UART - Construct a new UART instance
   UART uart;

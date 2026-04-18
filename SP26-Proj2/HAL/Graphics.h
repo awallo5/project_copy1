@@ -27,14 +27,7 @@ struct _GFX
 };
 typedef struct _GFX GFX;
 
-/* ================================================================
-   MACRO GRAPHICS CALLS
-   ================================================================ */
 
-void initialize_Starting_Screen_Graphics(HAL* hal_p);
-void initialize_Menu_Screen_Graphics(HAL* hal_p);
-void initialize_Instructions_Screen_Graphics(HAL* hal_p);
-void initialize_HighScore_Screen_Graphics(HAL* hal_p);
 
 /* ================================================================
    MICRO GRAPHICS CALLS
@@ -42,7 +35,7 @@ void initialize_HighScore_Screen_Graphics(HAL* hal_p);
 
 
 GFX GFX_construct(uint32_t defaultForeground, uint32_t defaultBackground);
-
+void GFX_setFont(Graphics_Context* context_p, const Graphics_Font* font_p);
 void GFX_resetColors(GFX* gfx_p);
 void GFX_clear(GFX* gfx_p);
 
@@ -64,5 +57,6 @@ void GFX_removeSolidCircle(GFX* gfx_p, int x, int y, int radius);
 void GFX_removeHollowCircle(GFX* gfx_p, int x, int y, int radius);
 
 void GFX_drawLine(GFX* gfx_p, int x1, int x2, int y1, int y2);
+
 
 #endif /* HAL_GRAPHICS_H_ */

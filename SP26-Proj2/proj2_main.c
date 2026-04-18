@@ -37,12 +37,12 @@ int main() {
 
 // Starting Screen Graphics Macro Function
 void initialize_Starting_Screen_Graphics(HAL* hal_p){
-
-    GFX_print(&hal_p->gfx, "Brick Breaker", 1, 1);
-    GFX_print(&hal_p->gfx, " Andrew Wallo V", 2, 1);
+    GFX_print(&hal_p->gfx, "SPRING 2026 PROJECT", 1, 1);
+    GFX_print(&hal_p->gfx, "Brick Breaker", 2, 1);
+    GFX_print(&hal_p->gfx, " Andrew Wallo V", 3, 1);
 
 }
-void initialize_Menu_Screen_Graphics(HAL* hal_p){
+void initialize_Menu_Screen_Graphics(Application *app_p, HAL* hal_p){
 
         GFX_clear(&hal_p->gfx);
         Graphics_drawStringCentered(&hal_p->gfx,
@@ -65,26 +65,77 @@ void initialize_Menu_Screen_Graphics(HAL* hal_p){
                             AUTO_STRING_LENGTH,
                             44,
                             60, false);
-        Graphics_drawStringCentered(&hal_p->gfx,
-                                    (int8_t *)"See terminal",
-                                    AUTO_STRING_LENGTH,
-                                    64,
-                                    110, false);
-        Graphics_drawStringCentered(&hal_p->gfx,
-                                    (int8_t *)" for controls.",
-                                    AUTO_STRING_LENGTH,
-                                    64,
-                                    120, false);
+        Graphics_drawString(&hal_p->gfx,
+                            (int8_t *)"Highscores",
+                            AUTO_STRING_LENGTH,
+                            44,
+                            70, false);
 
-    //    drawCursor(hal_p, TOP1);
+        drawCursor(app_p, hal_p);
 }
 
-void initialize_Instructions_Screen_Graphics(HAL* hal_p){
+
+void initialize_Instructions_Screen_Graphics(Application *app_p, HAL* hal_p){
 
 }
-void initialize_HighScore_Screen_Graphics(HAL* hal_p){
+void initialize_HighScore_Screen_Graphics(Application *app_p, HAL* hal_p){
 
 }
+
+/* ================================================================
+   CURSOR GRAPHICS
+   ================================================================ */
+
+ void drawCursor(Application *app_p, HAL* hal_p){
+
+     int temp_color = hal_p->gfx.foreground;   // stores any current foreground
+     int temp_font = hal_p->gfx.context.font; // stores any current font
+
+     GFX_setForeground(&hal_p->gfx, GRAPHICS_COLOR_BLACK);
+     GFX_setFont(&hal_p->gfx.context, &g_sFontFixed6x8);
+
+
+     Graphics_drawString(&hal_p->gfx,
+                         (int8_t *)">",
+                         AUTO_STRING_LENGTH,
+                         36,
+                         50, false);
+     Graphics_drawString(&hal_p->gfx,
+                         (int8_t *)">",
+                         AUTO_STRING_LENGTH,
+                         36,
+                         60, false);
+     Graphics_drawString(&hal_p->gfx,
+                         (int8_t *)">",
+                         AUTO_STRING_LENGTH,
+                         36,
+                         70, false);
+     GFX_setForeground(&hal_p->gfx, GRAPHICS_COLOR_WHITE);
+
+     Graphics_drawString(&hal_p->gfx,
+                              (int8_t *)">",
+                              AUTO_STRING_LENGTH,
+                              36,
+                              getCursorYpos(app_p), false);
+
+     // return to whatever it was before
+     GFX_setForeground(&hal_p->gfx, temp_color);
+     GFX_setFont(&hal_p->gfx.context, temp_font);
+ }
+
+ /* ================================================================
+    INT CHECKERS
+    ================================================================ */
+
+ int getCursorYpos(Application *app_p){
+     if(app_p->cursor_loc == cursor_OnPlay)
+         return 50;
+     if(app_p->cursor_loc == cursor_OnPlay)
+         return 60;
+     if(app_p->cursor_loc == cursor_OnPlay)
+         return 70;
+ }
+
 
 
 /* ================================================================
